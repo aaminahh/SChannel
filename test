@@ -1,0 +1,16 @@
+listOfNumbers = [2, 3, 4, 5, 6]
+
+def factorial(number):
+    if number == 1:
+       return number
+    else:
+        return number * factorial(number - 1)
+
+
+def calculate_sum(list):
+    sum = 0
+    for ele in range(0, len(list)):
+        sum = sum + list[ele]
+    print(sum)
+
+calculate_sum(listOfNumbers)
