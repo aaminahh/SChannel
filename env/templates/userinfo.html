@@ -5,9 +5,118 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Info</title>
+    <!----bootstrap app---->
+    <title>SWC App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 </head>
 <body>
-    
+    <div class="container">
+        <h1 class="display-4 text-center mb-4">Channel Management System</h1>
+        
+        <div class="row mb-4">
+          <div class="col text-center">
+            <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#addUserModal">Add User</a>
+          </div>
+       </div>
+        
+        <div class="row mb-4">
+          <div class="col text-center">
+            <a href="#" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#removeUserModal">Remove User</a>
+          </div>
+        </div>
+        
+      <div class="row mb-4">
+          <div class="col text-center">
+            <a href="#" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#listUserModal">Show List of Users</a>
+          </div>
+        </div>
+        </div>
+      
+      <!-- Add User modal -->
+      <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Add User</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class = "addUserInfo">
+                <label class = "text" for = "fname">First name:</label><br>
+                <input type = "text" id = "fname" name = "fname"><br>
+                <label class = "text" for = "lname">Last name:</label><br>
+                <input type = "text" id = "lname" name = "lname"><br>
+                <label class = "text" for = "email">Email:</label><br>
+                <input type = "text" id = "email" name = "email"><br>
+                <label class = "text" for = "phone">Phone Number:</label><br>
+                <input type = "text" id = "phone" name = "phone"><br><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+              </form>
+          </div>
+        </div>
+      </div>
+        
+    <!-- Remove User modal -->
+    <div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="removeUserModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Remove User</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class = "removeUserInfo">
+        
+                <label class = "text" for = "fname">First name:</label><br>
+                <input type = "text" id = "fname" name = "fname"><br>
+                <label class = "text" for = "lname">Last name:</label><br>
+                <input type = "text" id = "lname" name = "lname"><br><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+              </form>
+          </div>
+        </div>
+     </div>
+      
+    <!-- Show User List modal -->
+    <div class="modal fade" id="listUserModal" tabindex="-1" role="dialog" aria-labelledby="listUserModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Show List of Users</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class = "listUserInfo">
+                <label class = "text" for = "fname">First name:</label><br>
+                <input type = "text" id = "fname" name = "fname"><br>
+                <label class = "text" for = "lname">Last name:</label><br>
+                <input type = "text" id = "lname" name = "lname"><br><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+              </form>
+          </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

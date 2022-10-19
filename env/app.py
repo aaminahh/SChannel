@@ -67,5 +67,9 @@ def token():
     except:
         return {'message': 'There was an error logging in'},400
 
+@app.route('/api/adduser')
+def adduser():
+    return render_template('userinfo.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

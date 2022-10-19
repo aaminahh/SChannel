@@ -1,7 +1,6 @@
 from ast import Delete
 import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+from firebase_admin import db, credentials
 import json
 from twilio.rest import Client 
 
@@ -12,7 +11,9 @@ firebase_admin.initialize_app(cred, {
 })
 
 ref = db.reference('SChannel')
-users_ref = ref.child('Tables')
+channels = ref.child('Channels')
+channelgroups = ref.child('ChannelGroups')
+workflow = ref.child('Workflows')
 
 channelName = ref.child("Tables").child("Channels").child("Name").get()
 channelEmail = ref.child("Tables").child("Channels").child("Email").get()
