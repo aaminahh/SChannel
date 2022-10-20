@@ -1,8 +1,8 @@
 {% extends "home.html" %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="display-4 text-center mb-4">Channel Management System</h1>
+  <div id="container"> <!---changed from class to id so it sits on page nicely-->
+        <h1 class="display-4 mb-4 text-center">Channel Management System</h1>
         
         <div class="row mb-4">
           <div class="col text-center">
@@ -16,12 +16,12 @@
           </div>
         </div>
         
-      <div class="row mb-4">
+        <div class="row mb-4">
           <div class="col text-center">
             <a href="#" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#listUserModal">Show List of Users</a>
           </div>
         </div>
-        </div>
+  </div>
       
       <!-- Add User modal -->
       <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
@@ -34,19 +34,28 @@
               </button>
             </div>
             <div class="modal-body">
-              <form class = "addUserInfo">
-                <label class = "text" for = "fname">First name:</label><br>
-                <input type = "text" id = "fname" name = "fname"><br>
-                <label class = "text" for = "lname">Last name:</label><br>
-                <input type = "text" id = "lname" name = "lname"><br>
-                <label class = "text" for = "email">Email:</label><br>
-                <input type = "text" id = "email" name = "email"><br>
-                <label class = "text" for = "phone">Phone Number:</label><br>
-                <input type = "text" id = "phone" name = "phone"><br><br>
+              <form class = "addUserInfo" method="POST" action="">
+                {{ adduser_form.hidden_tag() }}
+              <div class = "form-group">
+                {{ adduser_form.first_name.label(class="form-control-label") }}
+                {{ adduser_form.first_name(class="form-control form-control-lg") }}
+              </div>
+              <div class = "form-group">
+                {{ adduser_form.last_name.label(class="form-control-label") }}
+                {{ adduser_form.last_name(class="form-control form-control-lg") }}
+              </div>
+              <div class = "form-group">
+                {{ adduser_form.email.label(class="form-control-label") }}
+                {{ adduser_form.email(class="form-control form-control-lg") }}
+              </div>
+              <div class = "form-group">
+                {{ adduser_form.phone_number.label(class="form-control-label") }}
+                {{ adduser_form.phone_number(class="form-control form-control-lg") }}
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit</button>
+              {{adduser_form.submit(class="btn btn-primary")}}
             </div>
               </form>
           </div>
@@ -64,16 +73,20 @@
               </button>
             </div>
             <div class="modal-body">
-              <form class = "removeUserInfo">
-        
-                <label class = "text" for = "fname">First name:</label><br>
-                <input type = "text" id = "fname" name = "fname"><br>
-                <label class = "text" for = "lname">Last name:</label><br>
-                <input type = "text" id = "lname" name = "lname"><br><br>
+              <form class = "removeUserInfo" method="POST" action="">
+                {{ removeuser_form.hidden_tag() }}
+                <div class = "form-group">
+                  {{ removeuser_form.first_name.label(class="form-control-label") }}
+                  {{ removeuser_form.first_name(class="form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                  {{ removeuser_form.last_name.label(class="form-control-label") }}
+                  {{ removeuser_form.last_name(class="form-control form-control-lg") }}
+                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit</button>
+              {{removeuser_form.submit(class="btn btn-primary")}}
             </div>
               </form>
           </div>
@@ -92,14 +105,10 @@
             </div>
             <div class="modal-body">
               <form class = "listUserInfo">
-                <label class = "text" for = "fname">First name:</label><br>
-                <input type = "text" id = "fname" name = "fname"><br>
-                <label class = "text" for = "lname">Last name:</label><br>
-                <input type = "text" id = "lname" name = "lname"><br><br>
+                <a>List of users goes here</a>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit</button>
             </div>
               </form>
           </div>
