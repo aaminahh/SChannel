@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, TextAreaField, SubmitField, SelectMultipleField, SelectField
 from wtforms.validators import DataRequired, Length
 
-class AddNewUserForm(FlaskForm):
+class CreateUserForm(FlaskForm): #give option to create gorups - make a null value key pair if not 
     first_name = StringField('First Name',
                             validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name',
@@ -12,18 +12,32 @@ class AddNewUserForm(FlaskForm):
                             validators=[DataRequired()])
     submit = SubmitField('Submit user')
 
-class RemoveUserForm(FlaskForm):
+class DeleteUserForm(FlaskForm): #corresponding route needs to remove user from db
+    first_name = StringField('First Name',
+                            validators=[DataRequired(), Length(min=2, max=20)])
+    last_name = StringField('Last Name',
+                            validators=[DataRequired(), Length(min=2, max=20)])
+    submit = SubmitField('Permanently delete user')
+
+class AddUserForm(FlaskForm): #this is fine
+    first_name = StringField('First Name',
+                            validators=[DataRequired(), Length(min=2, max=20)])
+    last_name = StringField('Last Name',
+                            validators=[DataRequired(), Length(min=2, max=20)])
+    submit = SubmitField('Add user')
+
+class RemoveUserForm(FlaskForm): #also fine
     first_name = StringField('First Name',
                             validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name',
                             validators=[DataRequired(), Length(min=2, max=20)])
     submit = SubmitField('Remove user')
 
-class CreateNewGroup(FlaskForm):
+class CreateGroup(FlaskForm):
     group_name = StringField('Group Name',
                             validators=[DataRequired(), Length(min=2, max=30)])
     group_desc = TextAreaField('Group Description',
                             validators=[DataRequired(), Length(min=2, max=250)])
-    group_add_existing = SelectField('Add existing user', 
-                            choices = [])
+    group_add_existing = SelectMultipleField('Add existing user/s', 
+                            choices=[], validate_choice=False) #UGH FINISH THIS
     submit = SubmitField('Create group')

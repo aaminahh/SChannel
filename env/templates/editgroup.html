@@ -49,14 +49,6 @@
                 {{ adduser_form.last_name.label(class="form-control-label") }}
                 {{ adduser_form.last_name(class="form-control form-control-lg") }}
               </div>
-              <div class = "form-group">
-                {{ adduser_form.email.label(class="form-control-label") }}
-                {{ adduser_form.email(class="form-control form-control-lg") }}
-              </div>
-              <div class = "form-group">
-                {{ adduser_form.phone_number.label(class="form-control-label") }}
-                {{ adduser_form.phone_number(class="form-control form-control-lg") }}
-              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -88,6 +80,10 @@
                     {{ creategroup_form.group_desc.label(class="form-control-label") }}
                     {{ creategroup_form.group_desc(class="form-control form-control-lg") }}
                 </div>
+                <div class = "form-group">
+                  {{ creategroup_form.group_add_existing.label(class="form-control-label") }}
+                  {{ creategroup_form.group_add_existing(class="form-control form-control-lg") }}
+              </div>
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
