@@ -1,10 +1,12 @@
 #Imports
+from random import randint
 import firebase_admin
 import pyrebase
 import json
+from uuid import uuid4
 from firebase_admin import credentials, auth, db
 from flask import Flask, request, render_template, redirect
-from forms import AddUserForm, RemoveUserForm
+from forms import AddNewUserForm, RemoveUserForm, CreateNewGroup
 from functools import wraps
 from twilio.rest import Client
 import collections
@@ -13,7 +15,7 @@ from collections.abc import MutableMapping
 #App configuration
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'any secret string'
+app.config['SECRET_KEY'] = '166bd6c8c805a8a3a4e62b55f36219a737f0345dba389cce'
 
 #Connect to firebase
 cred = credentials.Certificate('schannel-538d4-firebase-adminsdk-fp41y-f2a6a4646d.json')
@@ -21,6 +23,7 @@ firebase = firebase_admin.initialize_app(cred, {
 	'databaseURL': 'https://schannel-538d4-default-rtdb.firebaseio.com/'	
 })
 pb = pyrebase.initialize_app(json.load(open('sChannelconfig.json')))
+
 
 #Initialize messaging information
 account_sid = 'AC91c5afebf10d075eb56a120c957845ee' 
@@ -32,6 +35,7 @@ ref = db.reference('SChannel')
 channels = ref.child('Channels')
 channelgroups = ref.child('ChannelGroups')
 workflow = ref.child('Workflows')
+tables = ref.child('Tables')
 
 channelName = ref.child("Tables").child("Channels").child("Name").get()
 channelEmail = ref.child("Tables").child("Channels").child("Email").get()
@@ -48,82 +52,32 @@ workflowEmailTemp = ref.child("Tables").child("Workflow").child("Email template"
 workflowWhatsappTemp = ref.child("Tables").child("Workflow").child("Whatsapp template").get()
 workflowSMSTemp = ref.child("Tables").child("Workflow").child("SMS template").get()
 
-#Additional test data source
-users = [{'uid': 1, 'name': 'Aaminah Halipoto'}]
+#Api route 
+@app.route('/')
+def admin():
+    adduser_form = AddNewUserForm() #make its createuser
+    removeuser_form = RemoveUserForm() #make it deleteuser
+    tables.child(str(uuid4())).push({'First Name' : adduser_form.first_name.data, 'Last Name' : adduser_form.last_name.data, 'Email' : adduser_form.email.data, 'Phone Number' : adduser_form.phone_number.data})
+    #insert code that makes the remove user form functional - take first and last name and delete corresponding child node from channels
+    return render_template('admin.html', adduser_form=adduser_form, 
+    removeuser_form=removeuser_form)
 
-#Function to authorize user token
-def check_token(f):
-    @wraps(f)
-    def wrap(*args,**kwargs):
-        if not request.headers.get('authorization'):
-            return {'message': 'No token provided'},400
-        try:
-            user = auth.verify_id_token(request.headers['authorization'])
-            request.user = user
-        except:
-            return {'message':'Invalid token provided.'},400
-        return f(*args, **kwargs)
-    return wrap
+#Api route to creating a new group
+@app.route('/api/creategroup', methods=['GET', 'POST'])
+def editgroup():
+    adduser_form = AddNewUserForm() #modify to add user to a group - ie add a key/value that connects to group id in question
+    removeuser_form = RemoveUserForm() #modify to remove user from a group (either set key value to null or delete child altogether)
+    creategroup_form = CreateNewGroup() # actually i think this one is functional? 
+    tables.child(str(uuid4())).set({'First Name' : adduser_form.first_name.data, 'Last Name' : adduser_form.last_name.data, 'Email' : adduser_form.email.data, 'Phone Number' : adduser_form.phone_number.data})
+    channelgroups.child(str(uuid4())).set({'Group Name' : creategroup_form.group_name.data, 'Group Description' : creategroup_form.group_desc.data})
+    return render_template('editgroup.html', adduser_form=adduser_form, 
+        removeuser_form=removeuser_form, creategroup_form =creategroup_form)
 
-#Api route to get users
-@app.route('/api/userinfo')
-#@check_token
-def userinfo():
-    return {'data': users}, 200
 
-#Api route to sign up a new user
-@app.route('/api/signup')
-def signup():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    if email is None or password is None:
-        return {'message': 'Error missing email or password'},400
-    try:
-        user = auth.create_user(
-               email=email,
-               password=password
-        )
-        return {'message': f'Successfully created user {user.uid}'},200
-    except:
-        return {'message': 'Error creating user'},400
-        
-#Api route to get a new token for a valid user
-@app.route('/api/token')
-def token():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    try:
-        user = pb.auth().sign_in_with_email_and_password(email, password)
-        jwt = user['idToken']
-        return {'token': jwt}, 200
-    except:
-        return {'message': 'There was an error logging in'},400
-
-#Api route to test fetching from firebase data
-@app.route('/api/attempt')
-def attempt():
-    info=channelEmail
-    return render_template('attempt.html', info=info), 200
-
-#Api route to basic, untouched bootstrap modal
-@app.route('/api/addusercopy')
-def addusercopy():
-    return render_template('userinfocopy.html'), 200
-
-#Api route to bootstrap modal newly integrated to html
-@app.route('/api/adduser', methods=['GET', 'POST'])
-def adduser():
-    return render_template('userinfo.html')
-
-#Api route to bootstrap modal with integrated python forms
-@app.route('/api/action', methods=['GET', 'POST'])
-def register():
-    adduser_form = AddUserForm()
-    removeuser_form = RemoveUserForm()
-    return render_template(
-        'action.html', 
-        adduser_form=adduser_form, 
-        removeuser_form=removeuser_form)
+@app.route('/api/groupgrid', methods=['GET', 'POST'])
+def groupgrid():
+    groups = channelgroups.get()
+    return render_template('groupgrid.html', groups=groups)
 
 if __name__ == '__main__':
     app.run(debug=True)

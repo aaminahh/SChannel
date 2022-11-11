@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+    {% for group in groups %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">Group ID: + {{ group.channelgroupID }}</a>
+            </div>
+            <h2><a class="article-title" href="#">{{ group.name }}</a></h2>
+            <p class="article-content">Emails: {{ group.emails }} , Phones : {{ group.phones }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    {% endblock content %}
