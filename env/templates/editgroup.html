@@ -3,17 +3,19 @@
 {% block content %}
     <div id="container"> <!---changed from class to id so it sits on page nicely--> 
         <h1>Select Options</h1>
+
+        <div class="row mb-4">
+          <div class="col text-center">
+            <a href="#" class="btn btn-lg btn-warning" data-toggle="modal" data-target="#editGroupModal">Edit Group</a>
+          </div>
+        </div>
+
         <div class="row mb-4">
           <div class="col text-center">
             <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#addUserModal">Add User</a>
           </div>
         </div>
 
-        <div class="row mb-4">
-          <div class="col text-center">
-            <a href="#" class="btn btn-lg btn-warning" data-toggle="modal" data-target="#createGroupModal">Create Group</a>
-          </div>
-        </div>
 
         <div class="row mb-4">
           <div class="col text-center">
@@ -27,7 +29,38 @@
           </div>
         </div>
   </div>
-      
+
+          <!-- Edit Group modal -->
+    <div class="modal fade" id="editGroupModal" tabindex="-1" role="dialog" aria-labelledby="editGroupModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Edit Group Information</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form class= "editGroup" method="post" action="">
+                {{ editgroup_form.hidden_tag() }}
+                <div class = "form-group">
+                    {{ editgroup_form.group_name.label(class="form-control-label") }}
+                    {{ editgroup_form.group_name(class="form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ editgroup_form.group_desc.label(class="form-control-label") }}
+                    {{ editgroup_form.group_desc(class="form-control form-control-lg") }}
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        {{editgroup_form.submit(class="btn btn-primary")}}
+                </div>
+            </form>
+          </div>
+        </div>
+     </div>
+
       <!-- Add User modal -->
       <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -58,41 +91,6 @@
           </div>
         </div>
       </div>
-
-          <!-- Create New Group modal -->
-    <div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="createGroupModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Create New Group</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form class= "createGroup" method="post" action="">
-                {{ creategroup_form.hidden_tag() }}
-                <div class = "form-group">
-                    {{ creategroup_form.group_name.label(class="form-control-label") }}
-                    {{ creategroup_form.group_name(class="form-control form-control-lg") }}
-                </div>
-                <div class = "form-group">
-                    {{ creategroup_form.group_desc.label(class="form-control-label") }}
-                    {{ creategroup_form.group_desc(class="form-control form-control-lg") }}
-                </div>
-                <div class = "form-group">
-                  {{ creategroup_form.group_add_existing.label(class="form-control-label") }}
-                  {{ creategroup_form.group_add_existing(class="form-control form-control-lg") }}
-              </div>
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        {{creategroup_form.submit(class="btn btn-primary")}}
-                </div>
-            </form>
-          </div>
-        </div>
-     </div>
         
     <!-- Remove User modal -->
     <div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="removeUserModal" aria-hidden="true">

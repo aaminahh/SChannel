@@ -10,6 +10,7 @@ class CreateUserForm(FlaskForm): #give option to create gorups - make a null val
     email = StringField('Email', validators=[DataRequired()])
     phone_number = StringField('Phone Number',
                             validators=[DataRequired()])
+    channel_group = SelectMultipleField("Add user to existing groups (optional)")
     submit = SubmitField('Submit user')
 
 class DeleteUserForm(FlaskForm): #corresponding route needs to remove user from db
@@ -41,3 +42,12 @@ class CreateGroup(FlaskForm):
     group_add_existing = SelectMultipleField('Add existing user/s', 
                             choices=[], validate_choice=False) #UGH FINISH THIS
     submit = SubmitField('Create group')
+
+
+class EditGroup(FlaskForm):
+    group_name = StringField('Group Name',
+                            validators=[DataRequired(), Length(min=2, max=30)])
+    group_desc = TextAreaField('Group Description',
+                            validators=[DataRequired(), Length(min=2, max=250)])
+    submit = SubmitField('Submit changes')
+ 
