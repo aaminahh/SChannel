@@ -51,3 +51,7 @@ class EditGroup(FlaskForm):
                             validators=[DataRequired(), Length(min=2, max=250)])
     submit = SubmitField('Submit changes')
  
+class SendMessage(FlaskForm): 
+    message_body = TextAreaField('Message Body',
+                            validators=[DataRequired()])
+    message_name = StringField('Message Title')

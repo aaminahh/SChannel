@@ -6,7 +6,7 @@ import json
 from uuid import uuid4
 from firebase_admin import credentials, auth, db
 from flask import Flask, request, render_template, redirect
-from forms import CreateUserForm, DeleteUserForm, AddUserForm, RemoveUserForm, CreateGroup ,EditGroup
+from forms import CreateUserForm, DeleteUserForm, AddUserForm, RemoveUserForm, CreateGroup , EditGroup, SendMessage
 from functools import wraps
 from twilio.rest import Client
 import collections
@@ -89,8 +89,9 @@ def editgroup():
     channelGroupCount+=1
     adduser_form = AddUserForm() #modify to add user to a group - ie add a key/value that connects to group id in question
     removeuser_form = RemoveUserForm() #modify to remove user from a group (either set key value to null or delete child altogether)
-    creategroup_form = CreateGroup() # actually i think this one is functional? 
+    creategroup_form = CreateGroup() # this one is functional
     editgroup_form = EditGroup()
+    sendmessage_form = SendMessage()
     #if editgroup_form.validate_on_submit: 
         #update json object in firebase about group information
     #set the user indicated by adduser_form and modify channelgroup key to add cgID, true
@@ -100,9 +101,15 @@ def editgroup():
         'Group Description' : creategroup_form.group_desc.data, 
         'Group ID' : str(channelGroupCount)
         })
+    #for user in groups
+    #def sendSMSmessage(sendmessage_form.message_body, channelPhone): #take channelPhone and pass to channelphone in for loop
+    #    SMSmessage = client.messages.create(  
+    #        messaging_service_sid='MGf5e2fc1adb92c28055b10b7662293d00', 
+    #        body=sendmessage_form.message_body,      
+    #        to=('+1' + channelPhone)) 
     return render_template('editgroup.html', adduser_form=adduser_form, 
         removeuser_form=removeuser_form, creategroup_form =creategroup_form, 
-        editgroup_form=editgroup_form)
+        editgroup_form=editgroup_form, sendmessage_form=sendmessage_form)
 
 
 @app.route('/api/groupgrid', methods=['GET', 'POST'])
